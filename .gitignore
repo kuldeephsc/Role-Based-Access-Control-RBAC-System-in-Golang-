@@ -1,0 +1,13 @@
+# Node.js / Next.js
+node_modules/
+.next/
+dist/
+build/
+
+# Go
+bin/
+*.exe
+*.log
+
+# Environment
+.env
