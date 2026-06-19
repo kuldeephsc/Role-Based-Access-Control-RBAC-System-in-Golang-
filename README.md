@@ -144,7 +144,7 @@ rbac-platform/
 4. **Fail-safe Redis** — permission cache misses fall through to Postgres; blacklist checks fail open. A Redis outage degrades latency, never correctness or availability.
 5. **Clean architecture** — domain layer has zero infrastructure deps; repository interfaces are the only seam between the service layer and Postgres.
 
-## Seed data
+## when you install insert below data
 
 The first migration seeds three roles (`admin`, `manager`, `developer`) with their permission assignments. Signup auto-assigns the `developer` role. To promote a user to admin for testing:
 
@@ -154,12 +154,4 @@ SELECT u.id, r.id, u.id FROM users u, roles r
 WHERE u.email = 'admin@test.com' AND r.name = 'admin';
 ```
 
-## gRPC (Phase 5)
 
-Proto files are in `proto/`. Generate stubs locally with:
-
-```bash
-protoc --go_out=. --go-grpc_out=. proto/*.proto
-```
-
-Requires `protoc`, `protoc-gen-go`, and `protoc-gen-go-grpc` installed.
