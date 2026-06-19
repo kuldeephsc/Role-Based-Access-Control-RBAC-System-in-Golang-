@@ -1,0 +1,58 @@
+syntax = "proto3";
+package auth;
+option go_package = "rbac-platform/proto/authpb";
+
+// AuthService -- split from the monolith in Phase 5. The Gin gateway
+// becomes a thin BFF that calls this over gRPC instead of making
+// in-process function calls.
+
+service AuthService {
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Signup(SignupRequest) returns (SignupResponse);
+  rpc RefreshToken(RefreshRequest) returns (LoginResponse);
+  rpc ValidateToken(ValidateRequest) returns (ValidateResponse);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message SignupRequest {
+  string email = 1;
+  string password = 2;
+  string full_name = 3;
+}
+
+message SignupResponse {
+  string user_id = 1;
+  string email = 2;
+}
+
+message RefreshRequest {
+  string refresh_token = 1;
+}
+
+message ValidateRequest {
+  string access_token = 1;
+}
+
+message ValidateResponse {
+  bool valid = 1;
+  string user_id = 2;
+  repeated string roles = 3;
+}
+
+message LogoutRequest {
+  string refresh_token = 1;
+  string jti = 2;
+  int64 access_token_remaining_seconds = 3;
+}
+
+message LogoutResponse {}
