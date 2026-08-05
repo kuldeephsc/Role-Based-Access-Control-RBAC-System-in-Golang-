@@ -15,4 +15,4 @@ COPY migrations /migrations
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 EXPOSE 8080
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/bin/sh", "-c", "/bin/migrate -path /migrations -database \"$DATABASE_URL\" up && exec /bin/server"]
